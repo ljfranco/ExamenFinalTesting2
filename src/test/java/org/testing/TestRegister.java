@@ -16,11 +16,12 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestRegister {
+public class TestRegister extends BaseTest {
     private WebDriver driver;
     private WebDriverWait wait;
     static ExtentSparkReporter info = new ExtentSparkReporter("reports/UserRegistration-Test.html");
     static ExtentReports extent;
+
 
     @BeforeAll
     public static void createReport() {
@@ -37,13 +38,14 @@ public class TestRegister {
         wait = new WebDriverWait(driver, Duration.ofMillis(5000));
         RegisterPage registerPage = new RegisterPage(driver, wait);
         registerPage.setup();
-        registerPage.getUrl("https://parabank.parasoft.com/parabank/index.htm");
+        registerPage.getUrl(this.getUrl());
     }
 
     //test de Registro Exitoso
 
     @Test
     @Tag("REGISTRO")
+    @Tag("FRONTEND")
     public void successfulRegistration() throws InterruptedException {
         ExtentTest test = extent.createTest("successful user registration");
         test.log(Status.INFO, "Start test");

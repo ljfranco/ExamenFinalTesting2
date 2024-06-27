@@ -20,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class TestAccounts {
+public class TestAccounts extends BaseTest{
     private static WebDriver driver;
     private static WebDriverWait wait;
     static ExtentSparkReporter info = new ExtentSparkReporter("reports/Account-Test.html");
     static ExtentReports extent;
 
     @BeforeAll
-    public static void setUpClass() throws InterruptedException {
+    public void setUpClass() throws InterruptedException {
         // Configuracion para el reporte de la prueba
         extent = ReportFactory.getInstance();
         extent.attachReporter(info);
@@ -43,7 +43,7 @@ public class TestAccounts {
         wait = new WebDriverWait(driver, Duration.ofMillis(5000));
         CreateAccountPage createAccountPage = new CreateAccountPage(driver, wait);
         createAccountPage.setup();
-        createAccountPage.getUrl("https://parabank.parasoft.com/parabank/index.htm");
+        createAccountPage.getUrl(this.getUrl());
         LoginPage loginPage = new LoginPage(driver, wait);
         loginPage.login("DawnNunez", "123456");
 
@@ -51,6 +51,7 @@ public class TestAccounts {
 
     @Test
     @Tag("ACCOUNT")
+    @Tag("FRONTEND")
     @Order(1)
     public void createNewAccount() throws InterruptedException {
         ExtentTest test = extent.createTest("Create a new account");
@@ -71,6 +72,7 @@ public class TestAccounts {
 
     @Test
     @Tag("ACCOUNT")
+    @Tag("FRONTEND")
     @Order(2)
     public void transferFunds() throws InterruptedException {
         ExtentTest test = extent.createTest("Transfer funds");
@@ -97,6 +99,7 @@ public class TestAccounts {
 
     @Test
     @Tag("ACCOUNT")
+    @Tag("FRONTEND")
     @Order(3)
     public void accountSummary() throws InterruptedException {
         ExtentTest test = extent.createTest("Account activity");
@@ -113,6 +116,7 @@ public class TestAccounts {
 
     @Test
     @Tag("ACCOUNT")
+    @Tag("FRONTEND")
     @Order(4)
     public void accountActivity() throws InterruptedException {
         ExtentTest test = extent.createTest("Account activity");
@@ -135,7 +139,7 @@ public class TestAccounts {
 
 
     @AfterAll
-    public static void close() {
+    public void endTest() {
         //cerrar el navegador
         CreateAccountPage createAccountPage = new CreateAccountPage(driver, wait);
         createAccountPage.close();

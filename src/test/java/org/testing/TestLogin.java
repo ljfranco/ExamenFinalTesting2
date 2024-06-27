@@ -17,7 +17,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TestLogin {
+public class TestLogin extends BaseTest{
     private WebDriver driver;
     private WebDriverWait wait;
     static ExtentSparkReporter info = new ExtentSparkReporter("reports/UserLogin-Test.html");
@@ -43,11 +43,12 @@ public class TestLogin {
         wait = new WebDriverWait(driver, Duration.ofMillis(5000));
         RegisterPage registerPage = new RegisterPage(driver, wait);
         registerPage.setup();
-        registerPage.getUrl("https://parabank.parasoft.com/parabank/index.htm");
+        registerPage.getUrl(this.getUrl());
     }
 
     @Test
     @Tag("LOGIN")
+    @Tag("FRONTEND")
     public void successfullLogin() throws InterruptedException {
         ExtentTest test = extent.createTest("successful user Login");
         test.log(Status.INFO, "Start test");
